@@ -10,5 +10,6 @@
 </head>
 <body>
 	<h1>Index page</h1>
+	<a href="/qna/list">qna</a>
 </body>
 </html>

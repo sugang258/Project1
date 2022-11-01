@@ -12,7 +12,7 @@
 
 	<h1 class="text-center">List Page</h1>
 	<form class="row g-3" action="/qna/list">
-	  <div class="col-auto">
+	  <div class="col-auto" style="margin-top:20px; margin-left:650px;">
 	    <label for="inputPassword2" class="visually-hidden">search</label>
 	    <input type="text" id="search" name="search" value="">
 	  </div>
@@ -49,7 +49,7 @@
 
   </table>
   
-  <div class="container" id="pager">
+  <div class="container" id="pager" style="margin-left:700px;">
 		<nav aria-label="Page navigation example" class="justify-content-center">
 			<ul class="pagination">
 				<c:if test="${pager.pre}">
