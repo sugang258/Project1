@@ -35,6 +35,9 @@
     </tr>
     </tbody>
     </table>
+     <c:forEach items="${qnaVO.qnaFilesVO}" var="qna">
+    <img src="/file/qna/${qna.fileName}">
+    </c:forEach>
     
 </body>
 </html>

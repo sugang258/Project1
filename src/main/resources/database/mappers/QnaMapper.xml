@@ -13,8 +13,42 @@
 			SELECT COUNT(*) FROM QNA
 		</select>
 		
-		<select id="getDetail" parameterType="QnaVO" resultType="QnaVO">
-			SELECT * FROM QNA WHERE NUM = #{num}
+		<select id="getDetail" parameterType="QnaVO" resultMap="getDetailResult">
+			SELECT * FROM QNA
+			JOIN QNAFILES
+			ON QNA.NUM=QNAFILES.NUM
+			 WHERE QNA.NUM = #{num}
 		</select>
+		
+		<resultMap type="QnaVO" id="getDetailResult">
+		<id column="num" property="num"/>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="contents" property="contents"/>
+		<result column="hit" property="hit"/>
+		<result column="regDate" property="regDate"/>
+		<result column="ref" property="ref"/>
+		<result column="step" property="step"/>
+		<result column="depth" property="depth"/>
+			<collection property="qnaFilesVO" javaType="List" ofType="QnaFileVO">
+				<id column="fileNum" property="fileNum"/>
+				<result column="fileName" property="fileName"/>
+				<result column="oriName" property="oriName"/>
+			</collection>
+	</resultMap>
+		
+		<insert id="setAdd" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="num">
+			INSERT INTO QNA
+			VALUES (#{num},#{writer},#{title},#{contents},0,SYSDATE(),0,0,0)
+		</insert>
+		
+		<insert id="setFileAdd" parameterType="QnaFileVO">
+		INSERT INTO QNAFILES VALUES (#{fileNum},#{num},#{fileName},#{oriName})
+		</insert>
+		
+		<select id="getFileDetail" parameterType="QnaFileVO" resultType="QnaFileVO">
+		SELECT * FROM QNAFILES WHERE FILENUM=#{fileNum}
+		</select>
+		
 	</mapper>
 	
