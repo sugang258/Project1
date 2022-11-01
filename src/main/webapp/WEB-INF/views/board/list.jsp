@@ -53,14 +53,14 @@
 		<nav aria-label="Page navigation example" class="justify-content-center">
 			<ul class="pagination">
 				<c:if test="${pager.pre}">
-					<li class="page-item"><a class="page-link" href="./List?page=${pager.startNum-1}">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="./list?page=${pager.startNum-1}">Previous</a></li>
 				</c:if>
 				<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-					<li class="page-item"><a class="page-link" href="./List?page=${i}">${i}</a></li>
+					<li class="page-item"><a class="page-link" href="./list?page=${i}">${i}</a></li>
 				</c:forEach>
 							
 				<li class="page-item ${pager.next?'':'disabled'}">
-				<a class="page-link" href="./List?page=${pager.lastNum+1}">Next</a></li>
+				<a class="page-link" href="./list?page=${pager.lastNum+1}">Next</a></li>
 			</ul>
 		</nav>
  </div>

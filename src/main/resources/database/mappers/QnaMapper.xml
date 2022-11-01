@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<!-- dd -->
 	<mapper namespace="com.gang.home.board.qna.QnaMapper">
 		<select id="getList" resultType="QnaVO" parameterType="Pager">
 			SELECT * FROM QNA 
@@ -12,6 +11,10 @@
 		
 		<select id="getCount" resultType="java.lang.Long">
 			SELECT COUNT(*) FROM QNA
+		</select>
+		
+		<select id="getDetail" parameterType="QnaVO" resultType="QnaVO">
+			SELECT * FROM QNA WHERE NUM = #{num}
 		</select>
 	</mapper>
 	

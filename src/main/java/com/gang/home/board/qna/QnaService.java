@@ -22,4 +22,8 @@ public class QnaService {
 		pager.getRowNum();
 		return qnaMapper.getList(pager);
 	}
+	
+	public QnaVO getDetail(QnaVO qnaVO) throws Exception{
+		return qnaMapper.getDetail(qnaVO);
+	}
 }
