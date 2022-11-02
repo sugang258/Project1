@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <c:import url="../temp/boot.jsp"></c:import>
 <c:import url="../temp/summer.jsp"></c:import>
-<script defer src="/js/util.js"></script>
+<script defer type="text/javascript" src="/js/add.js"></script>
 </head>
 <body>
 	<section class="container-fluid col-lg-8 mt-5">

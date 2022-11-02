@@ -21,15 +21,15 @@ $("#files").on("click",".del",function(){
     count--;
 })
 
-let results=[false,true];
+// let results=[false,true];
 
-$("#title").blur(function(){
-    console.log("title");
-    let title = $("#title").val();
-    let result = nullCheck(title, $("#inputTitleResult"), "TITLE");
-    results[0] = result;
-    console.log(result);
-})
+// $("#title").blur(function(){
+//     console.log("title");
+//     let title = $("#title").val();
+//     let result = nullCheck(title, $("#inputTitleResult"), "TITLE");
+//     results[0] = result;
+//     console.log(result);
+// })
 
 // $("#contents").blur(function(){
 //     let contents = $("#contents").val();
@@ -38,11 +38,11 @@ $("#title").blur(function(){
 //     console.log(result);
 // })
 
-$("#addButton").click(function(){
-    if(results.includes(false)){
-        alert("필수 입력은 다 입력해");
-    }else{
-        alert("전송");
-        $("#addForm").submit();
-    }
-})
+// $("#addButton").click(function(){
+//     if(results.includes(false)){
+//         alert("필수 입력은 다 입력해");
+//     }else{
+//         alert("전송");
+//         $("#addForm").submit();
+//     }
+// })
