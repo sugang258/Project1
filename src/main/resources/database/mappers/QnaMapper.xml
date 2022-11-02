@@ -15,7 +15,7 @@
 		
 		<select id="getDetail" parameterType="QnaVO" resultMap="getDetailResult">
 			SELECT * FROM QNA
-			JOIN QNAFILES
+			LEFT JOIN QNAFILES
 			ON QNA.NUM=QNAFILES.NUM
 			 WHERE QNA.NUM = #{num}
 		</select>
