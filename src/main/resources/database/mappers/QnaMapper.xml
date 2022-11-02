@@ -9,8 +9,8 @@
 			ORDER BY NUM DESC LIMIT #{startRow},#{lastRow}
 		</select>
 		
-		<select id="getCount" resultType="java.lang.Long">
-			SELECT COUNT(*) FROM QNA
+		<select id="getCount" resultType="java.lang.Long" parameterType="pager">
+			SELECT COUNT(*) FROM QNA WHERE TITLE LIKE CONCAT ('%',#{search},'%')
 		</select>
 		
 		<select id="getDetail" parameterType="QnaVO" resultMap="getDetailResult">
