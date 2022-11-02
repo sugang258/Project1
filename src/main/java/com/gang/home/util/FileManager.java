@@ -23,52 +23,52 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class FileManager /*extends AbstractView*/ {
+public class FileManager extends AbstractView {
 	
-//	@Value("${app.download.base}")
-//	private String base;
+	@Value("${app.download.base}")
+	private String base;
 	
 	//Down 걸어주는 Method
-//	@Override
-//	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//		
-//		//FileManagerController에서 꺼내오기
-//		QnaFileVO qnaFileVO =(QnaFileVO) model.get("fileVO");
-//		String path =(String) model.get("path");
-//		
-//		log.info("=============================");
-//		log.info("FileVO : {}",qnaFileVO);
-//		
-//		//배포하면 경로가 바뀌어야함 /app2/upload/  ==> application-prod.properties 파일에 해줌
-//		//개발환경 => C:/result/upload/  ==> application.properties 파일에 해줌
-//		File file = new File(base+path, qnaFileVO.getFileName());
-//		
-//		//한글 처리
-//		response.setCharacterEncoding("UTF-8");
-//		
-//		//총 파일의 크기
-//		response.setContentLengthLong(file.length());
-//		
-//		//다운로드시 파일의 이름을 인코딩
-//		String oriName = URLEncoder.encode(qnaFileVO.getOriName(),"UTF-8");
-//		
-//		//header 설정
-//		response.setHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
-//		response.setHeader("Content-Transfer-Encoding", "binary");
-//		
-//		//HDD에서 파일을 읽고
-//		FileInputStream fi = new FileInputStream(file);
-//		//Client로 전송 준비
-//		OutputStream os = response.getOutputStream();
-//		
-//		//전송
-//		FileCopyUtils.copy(fi,os);
-//		
-//		//자원 해제
-//		os.close();
-//		fi.close();
-//	}
+	@Override
+	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		//FileManagerController에서 꺼내오기
+		QnaFileVO qnaFileVO =(QnaFileVO) model.get("fileVO");
+		String path =(String) model.get("path");
+		
+		log.info("=============================");
+		log.info("FileVO : {}",qnaFileVO);
+		
+		//배포하면 경로가 바뀌어야함 /app2/upload/  ==> application-prod.properties 파일에 해줌
+		//개발환경 => C:/result/upload/  ==> application.properties 파일에 해줌
+		File file = new File(base+path, qnaFileVO.getFileName());
+		
+		//한글 처리
+		response.setCharacterEncoding("UTF-8");
+		
+		//총 파일의 크기
+		response.setContentLengthLong(file.length());
+		
+		//다운로드시 파일의 이름을 인코딩
+		String oriName = URLEncoder.encode(qnaFileVO.getOriName(),"UTF-8");
+		
+		//header 설정
+		response.setHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		
+		//HDD에서 파일을 읽고
+		FileInputStream fi = new FileInputStream(file);
+		//Client로 전송 준비
+		OutputStream os = response.getOutputStream();
+		
+		//전송
+		FileCopyUtils.copy(fi,os);
+		
+		//자원 해제
+		os.close();
+		fi.close();
+	}
 	
 	public String saveFile(MultipartFile multipartFile, String path) throws IOException {
 		

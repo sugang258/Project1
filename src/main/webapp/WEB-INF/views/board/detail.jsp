@@ -37,6 +37,7 @@
     </table>
      <c:forEach items="${qnaVO.qnaFilesVO}" var="qna">
     <img src="/file/qna/${qna.fileName}">
+    <a href="/fileDown/qna?fileNum=${qna.fileNum}">${qna.oriName}</a>
     </c:forEach>
     
 </body>
