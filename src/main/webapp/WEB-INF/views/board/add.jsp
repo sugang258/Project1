@@ -24,7 +24,7 @@
 			  </div>
 			  <div class="mb-3">
 			    <label for="exampleInputPassword1" class="form-label">contents</label>
-	            <form:input cssclass="form-control add_ele" id="contents" path="contents" placeholder="강의 설명"/>
+	            <form:textarea cssclass="form-control add_ele" id="contents" path="contents" placeholder="강의 설명"/>
 			  	<form:errors path="contents"></form:errors>
 			  	<div id="inputContentsResult"></div>
 			  </div>
