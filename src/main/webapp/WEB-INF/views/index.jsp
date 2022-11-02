@@ -10,6 +10,7 @@
 </head>
 <body>
 	<h1>Index page</h1>
-	<a href="/qna/list">qna</a>
+	<a href="/qna/list" style="width:30px">qna</a>
+	<a href="/qna/add" style="width:30px">qna 쓰자쓰자</a>
 </body>
 </html>

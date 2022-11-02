@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,31 +9,34 @@
 <title>Insert title here</title>
 <c:import url="../temp/boot.jsp"></c:import>
 <c:import url="../temp/summer.jsp"></c:import>
-<script defer type="text/javascript" src="/js/add.js"></script>
+<script defer src="/js/util.js"></script>
 </head>
 <body>
 	<section class="container-fluid col-lg-8 mt-5">
 		<h1>Board Write Page</h1>
 		<div>
-			<form action="add" method="post" enctype="multipart/form-data">
+			<form:form action="add" modelAttribute="qnaVO" method="post" enctype="multipart/form-data" id="addForm">
 			  <div class="mb-3">
 			    <label for="exampleInputEmail1" class="form-label">Title</label>
-			    <input type="text" class="form-control" id="title" name="title">
+			    <form:input cssclass="form-control" id="title" path="title"/>
+			    <form:errors path="title"></form:errors>
+			  	<div id="inputTitleResult"></div>
 			  </div>
 			  <div class="mb-3">
 			    <label for="exampleInputPassword1" class="form-label">contents</label>
-	            <textarea  class="form-control add_ele" id="contents" name="contents" placeholder="강의 설명"></textarea>
+	            <form:input cssclass="form-control add_ele" id="contents" path="contents" placeholder="강의 설명"/>
+			  	<form:errors path="contents"></form:errors>
+			  	<div id="inputContentsResult"></div>
 			  </div>
-
-			  <div>
+			  
 				<div class="mb-3" id="files">
-
 				</div>
-				<div class="mb-3">
+				
+				<div cssclass="mb-3">
 					<button type="button" id="fileAdd">FileAdd</button>
 				</div>
 
-			  </div>
+			  
 			  <!-- <div class="mb-3">
 			    <label for="file" class="form-label">File</label>
 	            <input type="file"  class="form-control add_ele" id="file" name="files"/>
@@ -41,8 +45,8 @@
 			    <label for="file" class="form-label">File</label>
 	            <input type="file"  class="form-control add_ele" id="file" name="files"/>
 			  </div> -->
-			  <button type="submit" class="btn btn-primary">Submit</button>
-			</form>
+			  <button type="submit" class="btn btn-primary" id="addButton">Submit</button>
+			</form:form>
 		</div>
 	</section>
 <script type="text/javascript">
