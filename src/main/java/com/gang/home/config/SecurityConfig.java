@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -33,8 +35,7 @@ public class SecurityConfig {
 					.disable()
 				.authorizeRequests()
 					.antMatchers("/").permitAll()
-					.antMatchers("/login").permitAll()
-					.antMatchers("/logout").permitAll()
+					.antMatchers("/member/join").permitAll()
 					.antMatchers("/admin").hasRole("ADMIN")
 					.antMatchers("/manager").hasRole("MANAGER")
 					.antMatchers("/qna/list").permitAll()
@@ -42,12 +43,26 @@ public class SecurityConfig {
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()
+					.loginPage("/member/login")
+					.passwordParameter("pw")
+					.usernameParameter("id")
+					.defaultSuccessUrl("/")
+					.failureUrl("/member/login")
 					.permitAll()
 					.and()
 				.logout()
+					.logoutUrl("/member/logout")        
+				 	.logoutSuccessUrl("/member/login")        
+				 	.invalidateHttpSession(true).deleteCookies("JSESSIONID")
 					.permitAll();
 		
 		return httpSecurity.build();
 	}
+
+    @Bean
+    PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
 
 }
