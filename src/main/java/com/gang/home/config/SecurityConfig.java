@@ -1,5 +1,7 @@
 package com.gang.home.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.gang.home.member.MemberSecurityService;
 import com.gang.home.member.MemberService;
+import com.gang.home.member.MemberSocialService;
 import com.gang.home.member.security.LoginFail;
 import com.gang.home.member.security.LoginSuccess;
 import com.gang.home.member.security.LogoutCustom;
@@ -32,6 +38,8 @@ public class SecurityConfig {
 	private LogoutSuccessCustom logoutSuccessCustom;
 	@Autowired
 	private LogoutCustom logoutCustom;
+	@Autowired
+	private MemberSocialService memberSocialService;
 	
 	@Bean
 	//public을 선언하면 default로 바꾸라는 메세지 출력
@@ -52,14 +60,15 @@ public class SecurityConfig {
 					.csrf()
 					.disable()
 					.cors()
-					.and()
+					.configurationSource(this.corsConfigurationSource())
+					.disable()
 				.authorizeRequests()
 					.antMatchers("/").permitAll()
 					.antMatchers("/member/join").permitAll()
 					.antMatchers("/admin").hasRole("ADMIN")
 					.antMatchers("/manager").hasRole("MANAGER")
 					.antMatchers("/qna/list").permitAll()
-					.antMatchers("/qna/add").hasRole("ADMIN")
+					//.antMatchers("/qna/add").hasRole("ADMIN")
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()
@@ -87,6 +96,10 @@ public class SecurityConfig {
 					.key("rememberMe") //인증받은 사용자의 정보로 Token 생성시 필요, 필수값
 					.userDetailsService(memberSecurityService) //인증 절차를 실행할 userdetailService, 필수
 					.authenticationSuccessHandler(loginSuccess) //Login 성공 Handler
+					.and()
+				.oauth2Login()
+					.userInfoEndpoint()
+					.userService(memberSocialService)
 					;
 		
 		return httpSecurity.build();
@@ -95,6 +108,18 @@ public class SecurityConfig {
     @Bean
     PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    //@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+    	CorsConfiguration configuration = new CorsConfiguration();
+    	configuration.setAllowedOrigins(Arrays.asList("http://192.168.1.63:5500"));
+    	configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+    	
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	source.registerCorsConfiguration("/**", configuration);
+    	
+    	return source;
     }
 	
 

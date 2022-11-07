@@ -8,6 +8,7 @@
 </head>
 <body>
 	<form action="login" method="post" id="joinForm">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<div class="row">
 						<label for="ipId" class="form-label"><b>아이디</b></label>
 					</div>

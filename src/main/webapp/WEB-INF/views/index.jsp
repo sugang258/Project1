@@ -21,7 +21,10 @@
 			<sec:authentication property="Principal" var="user"/>
 			<h3>ID : ${user.id} </h3>
 			<h3>Name : ${user.name}</h3>
-				<a href="./member/logout">logout</a>
+			<form action="./member/logout" method="post">
+			<sec:csrfInput/>
+				<button>logout</button>
+				</form>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a href="/admin">Go Admin</a>
 				</sec:authorize>
@@ -34,6 +37,7 @@
 				<!-- 로그인 전 -->
 				<a href="./member/login">login</a>
 				<a href="./member/join">Join</a>
+				<a href="/oauth2/authorization/kakao">KaKao Login</a>
 			</sec:authorize>
 </body>
 </html>

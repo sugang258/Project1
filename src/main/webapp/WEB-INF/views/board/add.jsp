@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,7 @@
 		<h1>Board Write Page</h1>
 		<div>
 			<form:form action="add" modelAttribute="qnaVO" method="post" enctype="multipart/form-data" id="addForm">
+			  <sec:csrfInput/>
 			  <div class="mb-3">
 			    <label for="exampleInputEmail1" class="form-label">Title</label>
 			    <form:input cssclass="form-control" id="title" path="title"/>
