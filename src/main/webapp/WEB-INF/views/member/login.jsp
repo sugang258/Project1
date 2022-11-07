@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="login" method="post" id="joinForm">
+	<form action="http://192.168.1.36:81/member/login" method="post" id="joinForm">
 					<div class="row">
 						<label for="ipId" class="form-label"><b>아이디</b></label>
 					</div>
@@ -20,6 +20,10 @@
 						<label for="ipPw" class="form-label"><b>비밀번호</b></label>
 						<input type="text" name="pw" class="form-control border-success border-opacity-25" id="ipPw" placeholder="비밀번호를 입력해주세요">
 					</div>
+					<div class="mb-3 form-check">
+					    <input type="checkbox" name="rememberId" class="form-check-input" id="exampleCheck1">
+					    <label class="form-check-label" for="exampleCheck1">ID기억하기</label>
+				  	</div>
 					<input type="submit" value="로그인"/>
 	</form>
 

@@ -1,5 +1,6 @@
 package com.gang.home.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,10 +9,29 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import com.gang.home.member.MemberSecurityService;
+import com.gang.home.member.MemberService;
+import com.gang.home.member.security.LoginFail;
+import com.gang.home.member.security.LoginSuccess;
+import com.gang.home.member.security.LogoutCustom;
+import com.gang.home.member.security.LogoutSuccessCustom;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	private MemberSecurityService memberSecurityService;
+	@Autowired
+	private LoginSuccess loginSuccess;
+	@Autowired
+	private LoginFail loginFail;
+	@Autowired
+	private LogoutSuccessCustom logoutSuccessCustom;
+	@Autowired
+	private LogoutCustom logoutCustom;
 	
 	@Bean
 	//public을 선언하면 default로 바꾸라는 메세지 출력
@@ -29,10 +49,10 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
 		httpSecurity
-					.cors()
-					.and()
 					.csrf()
 					.disable()
+					.cors()
+					.and()
 				.authorizeRequests()
 					.antMatchers("/").permitAll()
 					.antMatchers("/member/join").permitAll()
@@ -46,15 +66,28 @@ public class SecurityConfig {
 					.loginPage("/member/login")
 					.passwordParameter("pw")
 					.usernameParameter("id")
-					.defaultSuccessUrl("/")
-					.failureUrl("/member/login")
+					//.defaultSuccessUrl("/")
+					.successHandler(loginSuccess)
+					//.failureUrl("/member/login")
+					.failureHandler(loginFail)
 					.permitAll()
 					.and()
 				.logout()
 					.logoutUrl("/member/logout")        
-				 	.logoutSuccessUrl("/member/login")        
-				 	.invalidateHttpSession(true).deleteCookies("JSESSIONID")
-					.permitAll();
+				 	//.logoutSuccessUrl("/member/login")
+					.logoutSuccessHandler(logoutSuccessCustom)
+					.addLogoutHandler(logoutCustom)
+				 	.invalidateHttpSession(true)
+				 	.deleteCookies("JSESSIONID")
+					.permitAll()
+					.and()
+				.rememberMe() //RememberMe 설정(아이디 기억하기)
+					.rememberMeParameter("rememberMe") //파라미터명
+					.tokenValiditySeconds(300)			//로그인 유지 유지시간, 초단위
+					.key("rememberMe") //인증받은 사용자의 정보로 Token 생성시 필요, 필수값
+					.userDetailsService(memberSecurityService) //인증 절차를 실행할 userdetailService, 필수
+					.authenticationSuccessHandler(loginSuccess) //Login 성공 Handler
+					;
 		
 		return httpSecurity.build();
 	}

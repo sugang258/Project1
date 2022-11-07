@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(value="/member/*")
@@ -18,8 +20,15 @@ public class MemberController {
 	private MemberService memberService;
 
 	@GetMapping("login")
+	public void getLogin(@RequestParam(defaultValue="false", required=false)boolean error, String message, Model model) throws Exception{
+		if(error) {
+			model.addAttribute("msg", "ID 또는 PW를 확인하세요");
+		}
+	}
+	
+	@PostMapping("login")
 	public String getLogin() throws Exception{
-		return "/member/login";
+		return "member/login";
 	}
 	
 	@GetMapping("join")
