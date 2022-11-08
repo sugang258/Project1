@@ -3,15 +3,17 @@ package com.gang.home.member;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Data;
 
 @Data
-public class MemberVO implements UserDetails{
+public class MemberVO implements UserDetails, OAuth2User{
 
 	private String  id;
 	private String pw;
@@ -19,6 +21,14 @@ public class MemberVO implements UserDetails{
 	private String email;
 	private boolean enabled;
 	private List<RoleVO> roleVOs;
+	
+	//==================Social Login===================
+	//kakao, naver, google
+	private String social;
+	
+	//OAuth2User, Token 등 정보 저장
+	private Map<String, Object> attributes;
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		//ROLE의 이름을 꺼내서 list에 넣기
@@ -54,6 +64,13 @@ public class MemberVO implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	
 	
 

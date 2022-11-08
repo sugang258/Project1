@@ -50,4 +50,9 @@ public class MemberController {
 //			
 //			return "/member/login";
 //	}
+	
+	@GetMapping("logoutResult")
+	public String socialLogout() throws Exception{
+		return "redirect:../";
+	}
 }

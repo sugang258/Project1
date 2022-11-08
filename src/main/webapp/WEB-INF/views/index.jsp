@@ -24,6 +24,8 @@
 			<form action="./member/logout" method="post">
 			<sec:csrfInput/>
 				<button>logout</button>
+				<a href="#">Logout</a>
+				<button id="kakao">Kakao_Logout</button>
 				</form>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a href="/admin">Go Admin</a>
@@ -39,5 +41,13 @@
 				<a href="./member/join">Join</a>
 				<a href="/oauth2/authorization/kakao">KaKao Login</a>
 			</sec:authorize>
+			
+		<script type="text/javascript">
+			$("#kakao").click(funtion(){
+				$.get("https://developers.kakao.com/logout"),function() {
+					location.reload();
+				}
+			});
+		</script>
 </body>
 </html>
